@@ -12,3 +12,18 @@ D:\C#\DỰ ÁN 01\obj\Debug\net8.0\refint\DỰ ÁN 01.dll
 D:\C#\DỰ ÁN 01\obj\Debug\net8.0\DỰ ÁN 01.pdb
 D:\C#\DỰ ÁN 01\obj\Debug\net8.0\DỰ ÁN 01.genruntimeconfig.cache
 D:\C#\DỰ ÁN 01\obj\Debug\net8.0\ref\DỰ ÁN 01.dll
+C:\Desktop app\project-01\bin\Debug\net8.0\DỰ ÁN 01.exe
+C:\Desktop app\project-01\bin\Debug\net8.0\DỰ ÁN 01.deps.json
+C:\Desktop app\project-01\bin\Debug\net8.0\DỰ ÁN 01.runtimeconfig.json
+C:\Desktop app\project-01\bin\Debug\net8.0\DỰ ÁN 01.dll
+C:\Desktop app\project-01\bin\Debug\net8.0\DỰ ÁN 01.pdb
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.GeneratedMSBuildEditorConfig.editorconfig
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.AssemblyInfoInputs.cache
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.AssemblyInfo.cs
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.csproj.CoreCompileInputs.cache
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.sourcelink.json
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.dll
+C:\Desktop app\project-01\obj\Debug\net8.0\refint\DỰ ÁN 01.dll
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.pdb
+C:\Desktop app\project-01\obj\Debug\net8.0\DỰ ÁN 01.genruntimeconfig.cache
+C:\Desktop app\project-01\obj\Debug\net8.0\ref\DỰ ÁN 01.dll
