@@ -1,0 +1,25 @@
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\DỰ ÁN 01.exe
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\DỰ ÁN 01.deps.json
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\DỰ ÁN 01.runtimeconfig.json
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\DỰ ÁN 01.dll
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\DỰ ÁN 01.pdb
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.GeneratedMSBuildEditorConfig.editorconfig
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.AssemblyInfoInputs.cache
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.AssemblyInfo.cs
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.csproj.CoreCompileInputs.cache
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.sourcelink.json
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.dll
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\refint\DỰ ÁN 01.dll
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.pdb
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.genruntimeconfig.cache
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\ref\DỰ ÁN 01.dll
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\MainWindow.baml
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\MainWindow.g.cs
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\App.g.cs
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01_MarkupCompile.cache
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01.g.resources
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\ConfirmDeleteWindow.baml
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\EditWindow.baml
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\ConfirmDeleteWindow.g.cs
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\EditWindow.g.cs
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01_MarkupCompile.lref
