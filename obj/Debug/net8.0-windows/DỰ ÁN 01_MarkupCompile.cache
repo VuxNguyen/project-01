@@ -1,5 +1,5 @@
 ﻿DỰ ÁN 01
-
+1.0.0.0
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR
 C:\Desktop app\project-01\App.xaml
 3-91866853
 
-7482147782
+9577949356
 198-832736211
 ConfirmDeleteWindow.xaml;EditWindow.xaml;MainWindow.xaml;
 
-False
+True
 

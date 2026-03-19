@@ -21,13 +21,13 @@ namespace WarehouseManagement
             lblHelmetType.Text = _helmet.HelmetType;
             lblSize.Text = _helmet.Size;
             lblBrand.Text = _helmet.Brand;
-            lblImportDate.Text = _helmet.ImportDate != DateTime.MinValue 
-                ? _helmet.ImportDate.ToString("dd/MM/yyyy") 
+            lblImportDate.Text = _helmet.ImportDate != DateTime.MinValue
+                ? _helmet.ImportDate.ToString("dd/MM/yyyy")
                 : "N/A";
             lblMaterial.Text = _helmet.Material;
             lblPrice.Text = _helmet.Price.ToString("N0") + " ₫";
             lblColor.Text = _helmet.Color;
-            lblWeight.Text = _helmet.Weight.ToString("F1") + " kg";
+            lblWeight.Text = _helmet.Weight.ToString("F0") + " gram";
         }
 
         private void BtnConfirm_Click(object sender, RoutedEventArgs e)
