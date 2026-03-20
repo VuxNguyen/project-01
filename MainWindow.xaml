@@ -52,7 +52,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="5">
-                            <ScrollViewer x:Name="PART_ContentHost" 
+                            <ScrollViewer x:Name="PART_ContentHost"
                                           VerticalAlignment="Center"
                                           Foreground="#000000"
                                           HorizontalScrollBarVisibility="Disabled"
@@ -65,6 +65,98 @@
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush" Value="#7f8c8d"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern ComboBox Style -->
+        <Style x:Key="ModernComboBox" TargetType="ComboBox">
+            <Setter Property="BorderBrush" Value="#bdc3c7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#2c3e50"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="25"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton x:Name="ToggleButton"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="2"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Focusable="false"
+                                          IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="5">
+                                            <Grid/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#ecf0f1"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="ContentSite"
+                                              Grid.Column="0"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              Margin="12,0,0,0"/>
+                            <Path x:Name="Arrow"
+                                  Grid.Column="1"
+                                  Data="M0,0 L4,4 L8,0 Z"
+                                  Fill="#7f8c8d"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,4,0"/>
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Border x:Name="DropDownBorder"
+                                        Background="White"
+                                        BorderBrush="#bdc3c7"
+                                        BorderThickness="1"
+                                        CornerRadius="5"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <ScrollViewer Margin="0" MaxHeight="200">
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#3498db"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsDropDownOpen" Value="True">
+                                <Setter Property="BorderBrush" Value="#3498db"/>
+                                <Setter Property="BorderThickness" Value="2"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -162,20 +254,21 @@
 
                     <!-- DataGrid -->
                     <Border Grid.Row="2" Background="White" CornerRadius="10" Padding="10">
-                        <DataGrid x:Name="dgvHelmets" AutoGenerateColumns="False" 
-                                  CanUserAddRows="False" SelectionMode="Single" 
+                        <DataGrid x:Name="dgvHelmets" AutoGenerateColumns="False"
+                                  CanUserAddRows="False" SelectionMode="Single"
+                                  IsReadOnly="True"
                                   Background="White" BorderThickness="0"
                                   AlternatingRowBackground="#f8f9fa" RowHeight="40">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Mã" Binding="{Binding Id}" Width="60"/>
                                 <DataGridTextColumn Header="Loại nón" Binding="{Binding HelmetType}" Width="100"/>
                                 <DataGridTextColumn Header="Kích thước" Binding="{Binding Size}" Width="70"/>
-                                <DataGridTextColumn Header="Hãng" Binding="{Binding Brand}" Width="100"/>
+                                <DataGridTextColumn Header="Hãng sản xuất" Binding="{Binding Brand}" Width="100"/>
                                 <DataGridTextColumn Header="Ngày nhập" Binding="{Binding ImportDate, StringFormat=dd/MM/yyyy}" Width="90"/>
                                 <DataGridTextColumn Header="Chất liệu" Binding="{Binding Material}" Width="100"/>
-                                <DataGridTextColumn Header="Giá (VND)" Binding="{Binding Price, StringFormat=N0}" Width="100"/>
-                                <DataGridTextColumn Header="Màu" Binding="{Binding Color}" Width="80"/>
-                                <DataGridTextColumn Header="Cân nặng" Binding="{Binding Weight, StringFormat=F1}" Width="70"/>
+                                <DataGridTextColumn Header="Giá tiền (VND)" Binding="{Binding Price, StringFormat=N0}" Width="100"/>
+                                <DataGridTextColumn Header="Màu sắc" Binding="{Binding Color}" Width="80"/>
+                                <DataGridTextColumn Header="Cân nặng (gram)" Binding="{Binding Weight, StringFormat=F0}" Width="90"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
@@ -206,12 +299,9 @@
                                     <GradientStop Color="#764ba2" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="📝" FontSize="28" VerticalAlignment="Center" Margin="0,0,15,0"/>
-                                <StackPanel>
-                                    <TextBlock Text="Thêm nón mới vào kho" FontSize="22" FontWeight="Bold" Foreground="White"/>
-                                    <TextBlock Text="Điền đầy đủ thông tin vào các trường bên dưới" FontSize="13" Foreground="#e8e8e8" Margin="0,5,0,0"/>
-                                </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Thêm nón mới vào kho" FontSize="22" FontWeight="Bold" Foreground="White"/>
+                                <TextBlock Text="Điền đầy đủ thông tin vào các trường bên dưới" FontSize="13" Foreground="#e8e8e8" Margin="0,5,0,0"/>
                             </StackPanel>
                         </Border>
 
@@ -237,34 +327,51 @@
 
                                 <!-- Column 1 -->
                                 <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,20">
-                                    <TextBlock Text="🆔 Mã nón" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Mã nón" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
                                     <TextBox x:Name="txtId" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
                                     <TextBlock Text="Nhập mã định danh duy nhất" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Column 2 -->
                                 <StackPanel Grid.Column="2" Grid.Row="0" Margin="0,0,0,20">
-                                    <TextBlock Text="🪖 Loại nón" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
-                                    <TextBox x:Name="txtHelmetType" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="Ví dụ: Nón bảo hiểm, Nón 1/2, Nón fullface" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <TextBlock Text="Loại nón" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <ComboBox x:Name="cmbHelmetType" Style="{StaticResource ModernComboBox}"
+                                              FontSize="14" Padding="12,10">
+                                        <ComboBoxItem Content="1/2"/>
+                                        <ComboBoxItem Content="3/4"/>
+                                        <ComboBoxItem Content="Fullface"/>
+                                    </ComboBox>
+                                    <TextBlock Text="Chọn loại nón" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Row 1 -->
                                 <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,20">
-                                    <TextBlock Text="📏 Kích thước" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
-                                    <TextBox x:Name="txtSize" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="Ví dụ: S, M, L, XL hoặc 54-56cm" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <TextBlock Text="Kích thước" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <ComboBox x:Name="cmbSize" Style="{StaticResource ModernComboBox}"
+                                              FontSize="14" Padding="12,10">
+                                        <ComboBoxItem Content="S"/>
+                                        <ComboBoxItem Content="M"/>
+                                        <ComboBoxItem Content="L"/>
+                                        <ComboBoxItem Content="XL"/>
+                                        <ComboBoxItem Content="XXL"/>
+                                        <ComboBoxItem Content="XXXL"/>
+                                    </ComboBox>
+                                    <TextBlock Text="Chọn kích thước" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,0,0,20">
-                                    <TextBlock Text="🏷️ Hãng sản xuất" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
-                                    <TextBox x:Name="txtBrand" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="Ví dụ: Royal, Andes, KYT, LS2" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <TextBlock Text="Hãng sản xuất" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <ComboBox x:Name="cmbBrand" Style="{StaticResource ModernComboBox}"
+                                              FontSize="14" Padding="12,10">
+                                        <ComboBoxItem Content="Royal"/>
+                                        <ComboBoxItem Content="Andes"/>
+                                    </ComboBox>
+                                    <TextBlock Text="Chọn hãng sản xuất" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Row 2 -->
                                 <StackPanel Grid.Column="0" Grid.Row="2" Margin="0,0,0,20">
-                                    <TextBlock Text="📅 Ngày nhập kho" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Ngày nhập kho" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
                                     <DatePicker x:Name="dtpImportDate" FontSize="14" BorderBrush="#bdc3c7" BorderThickness="1">
                                         <DatePicker.Resources>
                                             <Style TargetType="Border">
@@ -276,29 +383,30 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2" Grid.Row="2" Margin="0,0,0,20">
-                                    <TextBlock Text="🧱 Chất liệu" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Chất liệu" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
                                     <TextBox x:Name="txtMaterial" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
                                     <TextBlock Text="Ví dụ: Nhựa ABS, Carbon, Sợi thủy tinh" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Row 3 -->
                                 <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,20">
-                                    <TextBlock Text="💰 Giá tiền (VND)" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
-                                    <TextBox x:Name="txtPrice" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="Nhập giá bán lẻ" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <TextBlock Text="Giá tiền (VND)" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <TextBox x:Name="txtPrice" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"
+                                             TextChanged="TxtPrice_TextChanged" PreviewKeyDown="TxtPrice_PreviewKeyDown"/>
+                                    <TextBlock Text="Chỉ nhập số, tự động thêm dấu chấm" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2" Grid.Row="3" Margin="0,0,0,20">
-                                    <TextBlock Text="🎨 Màu sắc" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Màu sắc" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
                                     <TextBox x:Name="txtColor" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
                                     <TextBlock Text="Ví dụ: Đen, Trắng, Đỏ, Xanh" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Row 4 -->
                                 <StackPanel Grid.Column="0" Grid.Row="4" Margin="0,0,0,20">
-                                    <TextBlock Text="⚖️ Cân nặng (kg)" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Cân nặng (gram)" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
                                     <TextBox x:Name="txtWeight" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="Ví dụ: 1.2, 1.5, 2.0" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <TextBlock Text="Chỉ nhập số nguyên (không nhập dấu chấm/phẩy)" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Empty placeholder -->
@@ -312,14 +420,14 @@
                                 <DropShadowEffect BlurRadius="20" ShadowDepth="2" Opacity="0.1" Direction="270"/>
                             </Border.Effect>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button x:Name="btnSave" Content="💾 Lưu thông tin" Style="{StaticResource ModernButton}" 
+                                <Button x:Name="btnSave" Content="Lưu thông tin" Style="{StaticResource ModernButton}"
                                         Background="#2ecc71" FontSize="15" FontWeight="SemiBold"
                                         Padding="30,12" Margin="0,0,15,0" Click="BtnSave_Click">
                                     <Button.Effect>
                                         <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.3" Color="#27ae60" Direction="270"/>
                                     </Button.Effect>
                                 </Button>
-                                <Button x:Name="btnClear" Content="🧹 Xóa trắng" Style="{StaticResource ModernButton}" 
+                                <Button x:Name="btnClear" Content="Xóa trắng" Style="{StaticResource ModernButton}"
                                         Background="#95a5a6" FontSize="15" FontWeight="SemiBold"
                                         Padding="30,12" Click="BtnClear_Click"/>
                             </StackPanel>
