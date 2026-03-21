@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:models="clr-namespace:WarehouseManagement.Models"
         Title="Quản Lý Kho Hàng Nón" 
-        Height="650" Width="1100"
+        Height="700" Width="1200"
+        MinHeight="600" MinWidth="900"
+        MaxHeight="1200" MaxWidth="1920"
         WindowStartupLocation="CenterScreen"
-        Background="#f5f6fa">
+        Background="#f5f6fa"
+        SizeChanged="Window_SizeChanged"
+        StateChanged="Window_StateChanged"
+        Loaded="Window_Loaded">
     
     <Window.Resources>
         <!-- Modern Button Style -->
@@ -165,27 +170,33 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="60"/>
+            <RowDefinition Height="*" MinHeight="400"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Border Grid.Row="0" Background="#2c3e50" Padding="20">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="🪖" FontSize="28" VerticalAlignment="Center" Margin="0,0,15,0"/>
-                <StackPanel>
-                    <TextBlock Text="QUẢN LÝ KHO HÀNG NÓN" 
-                               FontSize="24" FontWeight="Bold" Foreground="White"/>
-                    <TextBlock Text="Helmet Warehouse Management" 
-                               FontSize="12" Foreground="#bdc3c7" Margin="0,2,0,0"/>
+        <Border x:Name="HeaderBorder" Grid.Row="0" Background="#2c3e50" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <TextBlock x:Name="HeaderIcon" Text="🪖" FontSize="28" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock x:Name="HeaderTitle" Text="QUẢN LÝ KHO HÀNG NÓN" 
+                                   FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        <TextBlock x:Name="HeaderSubtitle" Text="Helmet Warehouse Management" 
+                                   FontSize="12" Foreground="#bdc3c7" Margin="0,2,0,0"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Border>
 
         <!-- Main Content with Tabs -->
-        <TabControl Grid.Row="1" Margin="20" Background="Transparent" BorderThickness="0">
+        <TabControl x:Name="MainTabControl" Grid.Row="1" Margin="15" Background="Transparent" BorderThickness="0">
             <TabControl.Resources>
                 <Style TargetType="TabItem">
                     <Setter Property="Template">
@@ -217,20 +228,20 @@
 
             <!-- Tab 1: Danh sách nón -->
             <TabItem Header="📦 Danh sách nón" FontSize="14">
-                <Grid Margin="20">
+                <Grid x:Name="Tab1Grid" Margin="15">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" MinHeight="60"/>
+                        <RowDefinition Height="Auto" MinHeight="60"/>
+                        <RowDefinition Height="*" MinHeight="200"/>
+                        <RowDefinition Height="Auto" MinHeight="50"/>
                     </Grid.RowDefinitions>
 
                     <!-- Total Count -->
-                    <Border Grid.Row="0" Background="#3498db" CornerRadius="10" Padding="20" Margin="0,0,0,15">
+                    <Border x:Name="TotalCountBorder" Grid.Row="0" Background="#3498db" CornerRadius="10" Padding="20,15" Margin="0,0,0,15" MinHeight="70">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="📊" FontSize="24" VerticalAlignment="Center" Margin="0,0,15,0"/>
-                            <StackPanel>
-                                <TextBlock Text="Tổng số nón trong kho" FontSize="14" Foreground="#ecf0f1"/>
+                            <TextBlock x:Name="TotalCountIcon" Text="📊" FontSize="24" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock x:Name="TotalCountLabel" Text="Tổng số nón trong kho" FontSize="14" Foreground="#ecf0f1"/>
                                 <TextBlock x:Name="lblTotalHelmets" Text="0" FontSize="32" FontWeight="Bold" Foreground="White"/>
                             </StackPanel>
                         </StackPanel>
@@ -254,29 +265,115 @@
 
                     <!-- DataGrid -->
                     <Border Grid.Row="2" Background="White" CornerRadius="10" Padding="10">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <DataGrid x:Name="dgvHelmets" AutoGenerateColumns="False"
                                   CanUserAddRows="False" SelectionMode="Single"
+                                  CanUserResizeColumns="True"
                                   IsReadOnly="True"
                                   Background="White" BorderThickness="0"
-                                  AlternatingRowBackground="#f8f9fa" RowHeight="40">
+                                  AlternatingRowBackground="#f8f9fa" RowHeight="40"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Mã" Binding="{Binding Id}" Width="60"/>
-                                <DataGridTextColumn Header="Loại nón" Binding="{Binding HelmetType}" Width="100"/>
-                                <DataGridTextColumn Header="Kích thước" Binding="{Binding Size}" Width="70"/>
-                                <DataGridTextColumn Header="Hãng sản xuất" Binding="{Binding Brand}" Width="100"/>
-                                <DataGridTextColumn Header="Ngày nhập" Binding="{Binding ImportDate, StringFormat=dd/MM/yyyy}" Width="90"/>
-                                <DataGridTextColumn Header="Chất liệu" Binding="{Binding Material}" Width="100"/>
-                                <DataGridTextColumn Header="Giá tiền (VND)" Binding="{Binding Price, StringFormat=N0}" Width="100"/>
-                                <DataGridTextColumn Header="Màu sắc" Binding="{Binding Color}" Width="80"/>
-                                <DataGridTextColumn Header="Cân nặng (gram)" Binding="{Binding Weight, StringFormat=F0}" Width="90"/>
+                                <DataGridTextColumn Header="Mã" Binding="{Binding Id}" Width="60" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Loại nón" Binding="{Binding HelmetType}" Width="100" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Kích thước" Binding="{Binding Size}" Width="100" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Hãng sản xuất" Binding="{Binding Brand}" Width="120" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Ngày nhập kho" Binding="{Binding ImportDate, StringFormat=dd/MM/yyyy}" Width="120" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Chất liệu" Binding="{Binding Material}" Width="120" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Giá tiền (VND)" Binding="{Binding Price, StringFormat=N0}" Width="130" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Màu sắc" Binding="{Binding Color}" Width="80" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Cân nặng (gram)" Binding="{Binding Weight, StringFormat=F0}" Width="130" IsReadOnly="True">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+                        </ScrollViewer>
                     </Border>
 
                     <!-- Action Buttons -->
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,15,0,0">
-                        <Button Content="✏️ Chỉnh sửa" Style="{StaticResource ModernButton}" Margin="0,0,10,0" Click="BtnEdit_Click"/>
-                        <Button Content="🗑️ Xóa" Style="{StaticResource ModernButton}" Background="#e74c3c" Click="BtnDelete_Click"/>
+                    <StackPanel x:Name="ActionButtonsPanel" Grid.Row="3" Orientation="Horizontal" Margin="0,15,0,0">
+                        <Button x:Name="btnEdit" Content="✏️ Chỉnh sửa" Style="{StaticResource ModernButton}" Margin="0,0,10,0" Click="BtnEdit_Click" MinWidth="100"/>
+                        <Button x:Name="btnDelete" Content="🗑️ Xóa" Style="{StaticResource ModernButton}" Background="#e74c3c" Click="BtnDelete_Click" MinWidth="80"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -361,12 +458,8 @@
 
                                 <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,0,0,20">
                                     <TextBlock Text="Hãng sản xuất" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
-                                    <ComboBox x:Name="cmbBrand" Style="{StaticResource ModernComboBox}"
-                                              FontSize="14" Padding="12,10">
-                                        <ComboBoxItem Content="Royal"/>
-                                        <ComboBoxItem Content="Andes"/>
-                                    </ComboBox>
-                                    <TextBlock Text="Chọn hãng sản xuất" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <TextBox x:Name="txtBrand" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
+                                    <TextBlock Text="Nhập tên hãng sản xuất" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Row 2 -->

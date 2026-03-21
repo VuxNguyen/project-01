@@ -253,11 +253,8 @@
 
                     <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,0,0,25">
                         <TextBlock Text="Hãng sản xuất" Style="{StaticResource FormLabel}"/>
-                        <ComboBox x:Name="cmbBrand" Style="{StaticResource ModernComboBox}">
-                            <ComboBoxItem Content="Royal"/>
-                            <ComboBoxItem Content="Andes"/>
-                        </ComboBox>
-                        <TextBlock Text="Chọn hãng sản xuất" Style="{StaticResource HintText}"/>
+                        <TextBox x:Name="txtBrand" Style="{StaticResource ModernTextBox}"/>
+                        <TextBlock Text="Nhập tên hãng sản xuất" Style="{StaticResource HintText}"/>
                     </StackPanel>
 
                     <!-- Row 2 -->

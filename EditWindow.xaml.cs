@@ -49,17 +49,8 @@ namespace WarehouseManagement
                 }
             }
             
-            // Set selected value for Brand ComboBox
-            cmbBrand.SelectedItem = null;
-            foreach (var item in cmbBrand.Items)
-            {
-                if (item is ComboBoxItem comboItem && 
-                    comboItem.Content?.ToString() == _originalHelmet.Brand)
-                {
-                    cmbBrand.SelectedItem = item;
-                    break;
-                }
-            }
+            // Set brand value for Brand TextBox
+            txtBrand.Text = _originalHelmet.Brand;
             
             dtpImportDate.SelectedDate = _originalHelmet.ImportDate != DateTime.MinValue ? _originalHelmet.ImportDate : DateTime.Now;
             txtMaterial.Text = _originalHelmet.Material;
@@ -232,7 +223,7 @@ namespace WarehouseManagement
             // Get selected values from ComboBoxes
             string helmetType = (cmbHelmetType.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
             string size = (cmbSize.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
-            string brand = (cmbBrand.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+            string brand = txtBrand.Text;
 
             // Parse price - remove thousand separators
             decimal price = 0;
