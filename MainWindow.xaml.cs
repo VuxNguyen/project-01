@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using WarehouseManagement.Models;
 using WarehouseManagement.ViewModels;
 
@@ -15,6 +16,9 @@ namespace WarehouseManagement
     {
         private MainViewModel _viewModel;
         private List<Helmet> _allHelmets = new List<Helmet>();
+        private double _baseWidth = 1200;
+        private double _baseHeight = 700;
+        private bool _isInitialized = false;
 
         public MainWindow()
         {
@@ -23,6 +27,101 @@ namespace WarehouseManagement
             dtpImportDate.SelectedDate = DateTime.Now;
             SetupValidation();
             UpdateTotalHelmets();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _isInitialized = true;
+            ApplyResponsiveLayout();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_isInitialized)
+            {
+                ApplyResponsiveLayout();
+            }
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (_isInitialized)
+            {
+                ApplyResponsiveLayout();
+            }
+        }
+
+        private void ApplyResponsiveLayout()
+        {
+            double currentWidth = ActualWidth;
+            double currentHeight = ActualHeight;
+            
+            // Calculate scale factor based on window size
+            double scaleX = Math.Max(0.7, Math.Min(1.5, currentWidth / _baseWidth));
+            double scaleY = Math.Max(0.7, Math.Min(1.5, currentHeight / _baseHeight));
+            double scale = Math.Min(scaleX, scaleY);
+
+            // Adjust header font sizes using FindName
+            var headerTitle = FindName("HeaderTitle") as TextBlock;
+            var headerSubtitle = FindName("HeaderSubtitle") as TextBlock;
+            var headerIcon = FindName("HeaderIcon") as TextBlock;
+            
+            if (headerTitle != null)
+            {
+                headerTitle.FontSize = Math.Max(16, 24 * scale);
+            }
+            if (headerSubtitle != null)
+            {
+                headerSubtitle.FontSize = Math.Max(10, 12 * scale);
+            }
+            if (headerIcon != null)
+            {
+                headerIcon.FontSize = Math.Max(20, 28 * scale);
+            }
+
+            // Adjust total count section
+            var totalCountLabel = FindName("TotalCountLabel") as TextBlock;
+            var totalCountIcon = FindName("TotalCountIcon") as TextBlock;
+            
+            if (totalCountLabel != null)
+            {
+                totalCountLabel.FontSize = Math.Max(11, 14 * scale);
+            }
+            if (lblTotalHelmets != null)
+            {
+                lblTotalHelmets.FontSize = Math.Max(22, 32 * scale);
+            }
+            if (totalCountIcon != null)
+            {
+                totalCountIcon.FontSize = Math.Max(18, 24 * scale);
+            }
+
+            // Adjust TabControl margins based on window size
+            var mainTabControl = FindName("MainTabControl") as TabControl;
+            if (mainTabControl != null)
+            {
+                double margin = Math.Max(10, 15 * scale);
+                mainTabControl.Margin = new Thickness(margin);
+            }
+
+            // Adjust button sizes proportionally
+            AdjustButtonSizes(scale);
+        }
+
+        private void AdjustButtonSizes(double scale)
+        {
+            // Button MinWidth scaling using FindName
+            var btnEdit = FindName("btnEdit") as Button;
+            var btnDelete = FindName("btnDelete") as Button;
+            
+            if (btnEdit != null)
+            {
+                btnEdit.MinWidth = Math.Max(80, 100 * scale);
+            }
+            if (btnDelete != null)
+            {
+                btnDelete.MinWidth = Math.Max(60, 80 * scale);
+            }
         }
 
         private void SetupValidation()
@@ -225,20 +324,12 @@ namespace WarehouseManagement
             // Get selected values from ComboBoxes
             string helmetType = (cmbHelmetType.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
             string size = (cmbSize.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
-            string brand = (cmbBrand.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+            string brand = txtBrand.Text;
 
             if (string.IsNullOrEmpty(helmetType))
             {
                 MessageBox.Show("Vui lòng chọn loại nón!", "Thông báo",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            var existing = _viewModel.Helmets.FirstOrDefault(h => h.Id == txtId.Text);
-            if (existing != null)
-            {
-                MessageBox.Show("Mã nón đã tồn tại!", "Lỗi",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -281,7 +372,7 @@ namespace WarehouseManagement
             txtId.Text = "";
             cmbHelmetType.SelectedItem = null;
             cmbSize.SelectedItem = null;
-            cmbBrand.SelectedItem = null;
+            txtBrand.Text = "";
             dtpImportDate.SelectedDate = DateTime.Now;
             txtMaterial.Text = "";
             txtPrice.Text = "";
