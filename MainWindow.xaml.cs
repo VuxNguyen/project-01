@@ -96,27 +96,50 @@ namespace WarehouseManagement
             }
         }
 
-        public void TxtPrice_LostFocus(object sender, RoutedEventArgs e)
-        {
-            FormatPriceDisplay();
-        }
+        private bool _isUpdatingPrice = false;
 
         private void TxtPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // First, remove any non-digit characters
-            string text = txtPrice.Text;
-            string digitsOnly = new string(text.Where(char.IsDigit).ToArray());
-            
-            if (text != digitsOnly)
+            if (_isUpdatingPrice) return;
+
+            // Get current cursor position
+            int caretIndex = txtPrice.CaretIndex;
+
+            // Get raw digits only (remove dots and commas)
+            string rawText = txtPrice.Text.Replace(".", "").Replace(",", "");
+
+            // Check if user is deleting
+            bool isDeleting = rawText.Length < _previousPriceLength;
+            _previousPriceLength = rawText.Length;
+
+            // Format with thousand separators
+            if (!string.IsNullOrEmpty(rawText))
             {
-                txtPrice.Text = digitsOnly;
-                txtPrice.CaretIndex = digitsOnly.Length;
-                return;
+                if (long.TryParse(rawText, out long value) && value > 0)
+                {
+                    string formatted = value.ToString("N0", new CultureInfo("vi-VN"));
+
+                    // Adjust for dots that may have been added/removed
+                    if (!isDeleting)
+                    {
+                        // Adding digits - position cursor after the last digit
+                        caretIndex = formatted.Length;
+                    }
+                    else
+                    {
+                        // Deleting - maintain relative position
+                        caretIndex = Math.Min(caretIndex, formatted.Length);
+                    }
+
+                    _isUpdatingPrice = true;
+                    txtPrice.Text = formatted;
+                    txtPrice.CaretIndex = Math.Min(caretIndex, formatted.Length);
+                    _isUpdatingPrice = false;
+                }
             }
-            
-            // Then format with thousand separators
-            FormatPriceDisplay();
         }
+
+        private int _previousPriceLength = 0;
 
         private void TxtPrice_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -132,12 +155,12 @@ namespace WarehouseManagement
         {
             // Get raw digits only (remove dots and commas)
             string rawText = txtPrice.Text.Replace(".", "").Replace(",", "");
-            
+
             if (long.TryParse(rawText, out long value) && value > 0)
             {
                 // Use Vietnamese culture with dot as thousand separator
                 string formatted = value.ToString("N0", new CultureInfo("vi-VN"));
-                
+
                 // Only update if different to avoid flickering
                 if (txtPrice.Text != formatted)
                 {
