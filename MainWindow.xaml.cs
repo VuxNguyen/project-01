@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using WarehouseManagement.Models;
+using WarehouseManagement.Services;
 using WarehouseManagement.ViewModels;
 
 namespace WarehouseManagement
@@ -16,6 +17,7 @@ namespace WarehouseManagement
     {
         private MainViewModel _viewModel;
         private List<Helmet> _allHelmets = new List<Helmet>();
+        private List<string> _selectedBrands = new List<string>();
         private double _baseWidth = 1200;
         private double _baseHeight = 700;
         private bool _isInitialized = false;
@@ -26,7 +28,27 @@ namespace WarehouseManagement
             _viewModel = new MainViewModel();
             dtpImportDate.SelectedDate = DateTime.Now;
             SetupValidation();
+            LoadBrandsIntoComboBox();
             UpdateTotalHelmets();
+        }
+
+        private void LoadBrandsIntoComboBox()
+        {
+            // Refresh brands from LOGO folder
+            BrandManager.RefreshBrands();
+            
+            // Clear existing items
+            cmbBrand.Items.Clear();
+            
+            // Add brands from BrandManager (without logo display)
+            foreach (var brandName in BrandManager.GetBrandNames())
+            {
+                cmbBrand.Items.Add(new ComboBoxItem 
+                { 
+                    Content = brandName,
+                    Tag = brandName
+                });
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -295,10 +317,46 @@ namespace WarehouseManagement
                     h.Brand.Contains(txtSearch.Text, StringComparison.OrdinalIgnoreCase) ||
                     h.Color.Contains(txtSearch.Text, StringComparison.OrdinalIgnoreCase)).ToList();
 
+            // Apply brand filter if any brands are selected
+            if (_selectedBrands.Count > 0)
+            {
+                filtered = filtered.Where(h => 
+                    _selectedBrands.Any(b => h.Brand.Equals(b, StringComparison.OrdinalIgnoreCase))).ToList();
+            }
+
             _allHelmets = filtered;
             dgvHelmets.ItemsSource = null;
             dgvHelmets.ItemsSource = _allHelmets;
             UpdateTotalHelmets();
+        }
+
+        private void BtnBrandFilter_Click(object sender, RoutedEventArgs e)
+        {
+            var brandFilterWindow = new BrandFilterWindow(_selectedBrands);
+            brandFilterWindow.Owner = this;
+            
+            if (brandFilterWindow.ShowDialog() == true)
+            {
+                _selectedBrands = brandFilterWindow.SelectedBrands;
+                
+                // Update button text to show filter status using FindName
+                var button = FindName("btnBrandFilter") as Button;
+                if (button != null)
+                {
+                    if (_selectedBrands.Count > 0)
+                    {
+                        button.Content = $"🏷️ Lọc hãng ({_selectedBrands.Count})";
+                        button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8e44ad"));
+                    }
+                    else
+                    {
+                        button.Content = "🏷️ Lọc hãng";
+                        button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9b59b6"));
+                    }
+                }
+                
+                FilterHelmets();
+            }
         }
 
         private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -309,6 +367,16 @@ namespace WarehouseManagement
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             txtSearch.Text = "";
+            _selectedBrands.Clear();
+            
+            // Reset brand filter button
+            var button = FindName("btnBrandFilter") as Button;
+            if (button != null)
+            {
+                button.Content = "🏷️ Lọc hãng";
+                button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9b59b6"));
+            }
+            
             FilterHelmets();
         }
 
@@ -324,7 +392,7 @@ namespace WarehouseManagement
             // Get selected values from ComboBoxes
             string helmetType = (cmbHelmetType.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
             string size = (cmbSize.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
-            string brand = txtBrand.Text;
+            string brand = (cmbBrand.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
 
             if (string.IsNullOrEmpty(helmetType))
             {
@@ -372,7 +440,7 @@ namespace WarehouseManagement
             txtId.Text = "";
             cmbHelmetType.SelectedItem = null;
             cmbSize.SelectedItem = null;
-            txtBrand.Text = "";
+            cmbBrand.SelectedItem = null;
             dtpImportDate.SelectedDate = DateTime.Now;
             txtMaterial.Text = "";
             txtPrice.Text = "";
@@ -425,6 +493,20 @@ namespace WarehouseManagement
             {
                 MessageBox.Show("Vui lòng chọn nón cần xóa!", "Thông báo",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void BtnAddBrand_Click(object sender, RoutedEventArgs e)
+        {
+            var addBrandWindow = new AddBrandWindow();
+            addBrandWindow.Owner = this;
+            
+            if (addBrandWindow.ShowDialog() == true)
+            {
+                // Refresh brands list
+                LoadBrandsIntoComboBox();
+                MessageBox.Show("✅ Đã thêm hãng sản xuất mới!", "Thành công",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

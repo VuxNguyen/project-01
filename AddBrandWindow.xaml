@@ -1,0 +1,161 @@
+<Window x:Class="WarehouseManagement.AddBrandWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Thêm hãng sản xuất mới"
+        Height="580" Width="480"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="#f5f6fa">
+    
+    <Window.Resources>
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#3498db"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5" 
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2980b9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Secondary Button Style -->
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#2ecc71"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#27ae60"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="#bdc3c7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CaretBrush" Value="#000000"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          VerticalAlignment="Center"
+                                          Foreground="#000000"
+                                          HorizontalScrollBarVisibility="Disabled"
+                                          VerticalScrollBarVisibility="Disabled"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#3498db"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#7f8c8d"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#27ae60" CornerRadius="8" Margin="15,15,15,10" Padding="20">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="Thêm hãng sản xuất mới" FontSize="20" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                <TextBlock Text="Nhập tên hãng và chọn logo (tùy chọn)" FontSize="12" Foreground="#d5f5e3" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Form Content -->
+        <Border Grid.Row="1" Background="White" CornerRadius="10" Margin="15,0,15,10" Padding="24">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="10" ShadowDepth="2" Opacity="0.1"/>
+            </Border.Effect>
+            <StackPanel>
+                <!-- Brand Name -->
+                <TextBlock Text="Tên hãng sản xuất" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                <TextBox x:Name="txtBrandName" Style="{StaticResource ModernTextBox}" 
+                         TextWrapping="NoWrap"/>
+                <TextBlock Text="Ví dụ: NÓN YAMAHA, NÓN ROXX" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                
+                <!-- Logo Selection -->
+                <TextBlock Text="Logo (tùy chọn)" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,28,0,8"/>
+                <Border BorderBrush="#dfe6e9" BorderThickness="1" CornerRadius="8" Padding="16" Background="#f8f9fa">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Image Preview -->
+                        <Border x:Name="LogoPreviewBorder" Width="80" Height="80" CornerRadius="8" 
+                                Background="#ecf0f1" Margin="0,0,16,0" BorderThickness="1" BorderBrush="#dfe6e9">
+                            <Grid>
+                                <TextBlock Text="🖼️" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                           Foreground="#b2bec3"/>
+                                <Image x:Name="LogoPreview" Stretch="UniformToFill"/>
+                            </Grid>
+                        </Border>
+                        
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock x:Name="txtLogoPath" Text="Chưa chọn logo" 
+                                       Foreground="#636e72" VerticalAlignment="Center"
+                                       FontSize="14" FontWeight="Medium"/>
+                            <TextBlock Text="Hỗ trợ: PNG, JPG, JPEG, GIF" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                            <Button x:Name="btnBrowseLogo" Content="📁 Chọn hình ảnh" 
+                                    Style="{StaticResource ModernButton}" Click="BtnBrowseLogo_Click"
+                                    Margin="0,12,0,0" Padding="14,10"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+        
+        <!-- Action Buttons -->
+        <Border Grid.Row="2" Background="White" CornerRadius="10" Margin="15,0,15,15" Padding="16">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="2" Opacity="0.08"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnCancel" Content="✖ Hủy" 
+                        Style="{StaticResource ModernButton}" Background="#95a5a6"
+                        Margin="0,0,12,0" Padding="16,10" Click="BtnCancel_Click"/>
+                <Button x:Name="btnSave" Content="✓ Lưu hãng mới" 
+                        Style="{StaticResource SecondaryButton}" Padding="16,10" Click="BtnSave_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
