@@ -23,3 +23,19 @@ c:\Desktop app\project-01\obj\Debug\net8.0-windows\EditWindow.baml
 c:\Desktop app\project-01\obj\Debug\net8.0-windows\ConfirmDeleteWindow.g.cs
 c:\Desktop app\project-01\obj\Debug\net8.0-windows\EditWindow.g.cs
 c:\Desktop app\project-01\obj\Debug\net8.0-windows\DỰ ÁN 01_MarkupCompile.lref
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\AddBrandWindow.baml
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\BrandFilterWindow.baml
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\AddBrandWindow.g.cs
+c:\Desktop app\project-01\obj\Debug\net8.0-windows\BrandFilterWindow.g.cs
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\ANDES.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\ASIA.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\FALCON.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\KYT.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\NITRINOS.jpg
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\NONA.jpg
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\POC.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\ROC.jpg
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\ROYAL.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\SUNDA.png
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\SƠN.jpg
+c:\Desktop app\project-01\bin\Debug\net8.0-windows\LOGO\ZEUS.jpg

@@ -247,18 +247,22 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Search Panel -->
+                    <!-- Search Panel with Brand Filter -->
                     <Border Grid.Row="1" Background="White" CornerRadius="10" Padding="15" Margin="0,0,0,15">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="🔍" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0"/>
                             <TextBox x:Name="txtSearch" Grid.Column="1" Style="{StaticResource ModernTextBox}" 
                                      TextChanged="TxtSearch_TextChanged"/>
-                            <Button Grid.Column="2" Content="🔄 Làm mới" Style="{StaticResource ModernButton}" 
+                            <Button x:Name="btnBrandFilter" Grid.Column="2" Content="🏷️ Lọc hãng" 
+                                    Style="{StaticResource ModernButton}" Background="#9b59b6"
+                                    Margin="10,0,0,0" Click="BtnBrandFilter_Click"/>
+                            <Button Grid.Column="3" Content="🔄 Làm mới" Style="{StaticResource ModernButton}" 
                                     Margin="10,0,0,0" Click="BtnRefresh_Click"/>
                         </Grid>
                     </Border>
@@ -268,7 +272,7 @@
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <DataGrid x:Name="dgvHelmets" AutoGenerateColumns="False"
                                   CanUserAddRows="False" SelectionMode="Single"
-                                  CanUserResizeColumns="True"
+                                  CanUserResizeColumns="False"
                                   IsReadOnly="True"
                                   Background="White" BorderThickness="0"
                                   AlternatingRowBackground="#f8f9fa" RowHeight="40"
@@ -457,9 +461,21 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2" Grid.Row="1" Margin="0,0,0,20">
-                                    <TextBlock Text="Hãng sản xuất" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
-                                    <TextBox x:Name="txtBrand" Style="{StaticResource ModernTextBox}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="Nhập tên hãng sản xuất" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Hãng sản xuất" FontSize="13" FontWeight="SemiBold" Foreground="#2c3e50" Margin="0,0,0,8"/>
+                                        <Button Grid.Column="1" Content="➕" FontSize="12" 
+                                                Style="{StaticResource ModernButton}" Background="#2ecc71"
+                                                Padding="8,4" ToolTip="Thêm hãng mới"
+                                                Click="BtnAddBrand_Click"/>
+                                    </Grid>
+                                    <ComboBox x:Name="cmbBrand" Style="{StaticResource ModernComboBox}"
+                                              FontSize="14" Padding="12,10">
+                                    </ComboBox>
+                                    <TextBlock Text="Chọn hãng sản xuất" FontSize="11" Foreground="#95a5a6" Margin="0,5,0,0"/>
                                 </StackPanel>
 
                                 <!-- Row 2 -->

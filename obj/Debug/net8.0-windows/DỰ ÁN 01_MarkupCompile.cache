@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\Desktop app\project-01\App.xaml
-3-91866853
+5-1975715621
 
-7482147782
+11-497477769
 198-832736211
-ConfirmDeleteWindow.xaml;EditWindow.xaml;MainWindow.xaml;
+AddBrandWindow.xaml;BrandFilterWindow.xaml;ConfirmDeleteWindow.xaml;EditWindow.xaml;MainWindow.xaml;
 
 False
 
